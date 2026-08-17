@@ -10,7 +10,7 @@ How it's built
 
 **The project has two parts:**
 
-Frontend (index.html) — a single-page site with the hero, article grid, insights panels, and newsletter signup form. It fetches live article data from the backend API and renders it dynamically.
+Frontend (index.html) — a single-page site with the hero, article grid, insights panels, and newsletter signup form. 
 Backend (techpulse-backend/) — a Node.js/Express API backed by SQLite that serves articles and stores newsletter subscribers. Admin routes (protected by a bearer token) allow creating, updating, and deleting articles without redeploying the site.
 
 **Status**

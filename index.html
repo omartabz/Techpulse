@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Pulse Daily</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: #111827;
+        --panel-soft: #1f2937;
+        --card: #0b1220;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --primary: #38bdf8;
+        --accent: #a78bfa;
+        --success: #34d399;
+        --border: rgba(148, 163, 184, 0.2);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #020817 0%, #0f172a 100%);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1120px, 92%);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(10px);
+        background: rgba(15, 23, 42, 0.8);
+        border-bottom: 1px solid var(--border);
+        z-index: 10;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .brand {
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .brand span {
+        color: var(--primary);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.25rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.1rem;
+        border-radius: 999px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: #020817;
+      }
+
+      .hero {
+        padding: 4rem 0 2rem;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 1rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 5vw, 4.4rem);
+        line-height: 1.05;
+        margin: 0 0 1rem;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.7;
+        max-width: 62ch;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 0.9rem;
+        margin-top: 1.5rem;
+      }
+
+      .hero-card {
+        background: linear-gradient(180deg, rgba(17, 24, 39, 0.92), rgba(15, 23, 42, 0.95));
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 1.4rem;
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
+      }
+
+      .hero-card .mini-label {
+        color: var(--muted);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .stat {
+        font-size: 2.3rem;
+        font-weight: 800;
+        margin: 0.8rem 0;
+      }
+
+      .mini-list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0 0;
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .mini-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        padding-bottom: 0.6rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .mini-list li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--success);
+        box-shadow: 0 0 12px rgba(52, 211, 153, 0.85);
+      }
+
+      .section {
+        padding: 2rem 0 3rem;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+      }
+
+      .section-copy {
+        color: var(--muted);
+      }
+
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+      }
+
+      .news-card {
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      .image-box {
+        height: 180px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(167, 139, 250, 0.3));
+        position: relative;
+      }
+
+      .image-box::after {
+        content: "";
+        position: absolute;
+        inset: 20px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.4));
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .card-body {
+        padding: 1.1rem 1rem 1.2rem;
+      }
+
+      .tag {
+        display: inline-block;
+        margin-bottom: 0.8rem;
+        padding: 0.35rem 0.6rem;
+        background: rgba(167, 139, 250, 0.12);
+        border: 1px solid rgba(167, 139, 250, 0.2);
+        color: #d8b4fe;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .news-card h3 {
+        margin: 0 0 0.7rem;
+        font-size: 1.2rem;
+      }
+
+      .news-card p {
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .digest {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .panel {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.3rem;
+      }
+
+      .panel h3 {
+        margin-top: 0;
+        font-size: 1.1rem;
+      }
+
+      .list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .list li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .list strong {
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+
+      .list span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .chip {
+        color: var(--primary);
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+
+      .newsletter {
+        margin-top: 1rem;
+        padding: 1.5rem;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.13), rgba(167, 139, 250, 0.16));
+        border: 1px solid rgba(56, 189, 248, 0.2);
+      }
+
+      .newsletter-form {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .newsletter-form input {
+        flex: 1 1 220px;
+        padding: 0.9rem 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(15, 23, 42, 0.8);
+        color: var(--text);
+      }
+
+      footer {
+        padding: 2rem 0 3rem;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 860px) {
+        .hero-grid,
+        .news-grid,
+        .digest {
+          grid-template-columns: 1fr;
+        }
+
+        .nav {
+          flex-direction: column;
+          gap: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <div class="brand"><span>Tech</span> Pulse</div>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#updates">Updates</a>
+          <a href="#insights">Insights</a>
+          <a href="#briefing">Briefing</a>
+          <a href="#newsletter">Newsletter</a>
+        </nav>
+        <button class="btn btn-primary">Subscribe</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Latest technology signal</div>
+            <h1>What’s changing in tech right now.</h1>
+            <p class="lead">
+              Explore the biggest moves in AI, cloud, cybersecurity, and product innovation—curated for busy teams who want the signal, not the noise.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary">Read the briefing</button>
+              <button class="btn" style="background:#0f172a; color:var(--text); border:1px solid var(--border);">View archive</button>
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="Market overview">
+            <div class="mini-label">This week</div>
+            <div class="stat">24</div>
+            <div class="mini-label">Major updates tracked</div>
+            <ul class="mini-list">
+              <li><span>AI launches</span><span class="dot"></span></li>
+              <li><span>Cloud pricing shifts</span><span class="dot"></span></li>
+              <li><span>Security advisories</span><span class="dot"></span></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="updates">
+        <div class="section-head">
+          <div>
+            <h2>Top tech updates</h2>
+          </div>
+          <div class="section-copy">Updated today</div>
+        </div>
+
+        <div class="news-grid" id="newsGrid"></div>
+      </section>
+
+      <section class="section" id="insights">
+        <div class="digest">
+          <div class="panel">
+            <h3>Trending topics</h3>
+            <ul class="list">
+              <li>
+                <div>
+                  <strong>AI copilots move into enterprise workflows</strong>
+                  <span>Teams are prioritizing governance and ROI.</span>
+                </div>
+                <span class="chip">AI</span>
+              </li>
+              <li>
+                <div>
+                  <strong>Edge computing gains momentum in retail</strong>
+                  <span>Faster processing is driving smarter shop floors.</span>
+                </div>
+                <span class="chip">Infra</span>
+              </li>
+              <li>
+                <div>
+                  <strong>Zero-trust adoption accelerates</strong>
+                  <span>Security teams are tightening access controls.</span>
+                </div>
+                <span class="chip">Security</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="panel" id="briefing">
+            <h3>Briefing note</h3>
+            <ul class="list">
+              <li>
+                <div>
+                  <strong>Dev tools are getting more agentic</strong>
+                  <span>Automation is shifting from scripts to assistants.</span>
+                </div>
+                <span class="chip">Developers</span>
+              </li>
+              <li>
+                <div>
+                  <strong>Cloud cost optimization is back in focus</strong>
+                  <span>Teams want efficiency without sacrificing performance.</span>
+                </div>
+                <span class="chip">Cloud</span>
+              </li>
+              <li>
+                <div>
+                  <strong>Open-source AI is becoming more practical</strong>
+                  <span>Customization and control are winning support.</span>
+                </div>
+                <span class="chip">Open Source</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="newsletter">
+        <div class="newsletter">
+          <h2>Get the next briefing in your inbox</h2>
+          <p class="lead" style="margin-bottom:0;">
+            A concise weekly digest on the tech stories that matter most.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" aria-label="Email address" />
+            <button class="btn btn-primary" type="submit">Join free</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 Tech Pulse Daily — tracking the shifts shaping the digital world.
+    </footer>
+
+    <script>
+      const API_URL = 'http://localhost:3001/api';
+
+      // Fetch articles from backend
+      async function loadArticles() {
+        try {
+          const response = await fetch(`${API_URL}/articles?limit=3`);
+          if (!response.ok) throw new Error('Failed to fetch articles');
+          
+          const articles = await response.json();
+          const newsGrid = document.getElementById('newsGrid');
+          
+          articles.forEach((item) => {
+            const card = document.createElement('article');
+            card.className = 'news-card';
+            // Format the date for display
+            const pubDate = item.published_at ? new Date(item.published_at) : new Date();
+            const dateStr = pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            
+            card.innerHTML = `
+              <div class="image-box"></div>
+              <div class="card-body">
+                <span class="tag">${item.tag}</span>
+                <h3>${item.title}</h3>
+                <p>${item.summary}</p>
+                <div class="meta">
+                  <span>${dateStr}</span>
+                  <span>${item.author}</span>
+                </div>
+              </div>
+            `;
+            newsGrid.appendChild(card);
+          });
+        } catch (error) {
+          console.error('Error loading articles:', error);
+          const newsGrid = document.getElementById('newsGrid');
+          newsGrid.innerHTML = '<p style="color: var(--muted); grid-column: 1/-1;">Unable to load articles. Please check if the backend is running on http://localhost:3001</p>';
+        }
+      }
+
+      // Handle newsletter subscription
+      document.querySelector('.newsletter-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const emailInput = this.querySelector('input[type="email"]');
+        const button = this.querySelector('button');
+        const email = emailInput.value.trim();
+
+        if (!email) return;
+
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'Subscribing...';
+
+        try {
+          const response = await fetch(`${API_URL}/subscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Subscription failed');
+          }
+
+          button.textContent = 'Subscribed!';
+          emailInput.value = '';
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+          }, 3000);
+        } catch (error) {
+          console.error('Subscription error:', error);
+          button.textContent = 'Error! Try again';
+          button.disabled = false;
+          setTimeout(() => {
+            button.textContent = originalText;
+          }, 3000);
+        }
+      });
+
+      // Load articles on page load
+      document.addEventListener('DOMContentLoaded', loadArticles);
+    </script>
+  </body>
+</html>
